@@ -5,6 +5,7 @@ import os
 from tqdm.contrib.concurrent import process_map
 from time import time
 
+
 class Convert:
     def __init__(self):
         self.in_folder = ""
@@ -36,10 +37,10 @@ class Convert:
         if not os.path.exists(in_folder):
             raise print("no in folder")
 
-    def convert(self, input: str):
-        base_name = "".join(input.split(".")[:-1])
+    def convert(self, input_img: str):
+        base_name = "".join(input_img.split(".")[:-1])
         out_folder = os.path.join(fr"{self.out_folder}/{base_name}.{self.img_format}")
-        img = read(os.path.join(fr"{self.in_folder}/{input}"))
+        img = read(os.path.join(fr"{self.in_folder}/{input}"), 4)
         save(img, out_folder)
 
     def start_process(self):
@@ -51,7 +52,7 @@ class Convert:
         ]
         start = time()
         process_map(self.convert, list_image)
-        print(time()-start)
+        print(time() - start)
 
 
 if __name__ == "__main__":
